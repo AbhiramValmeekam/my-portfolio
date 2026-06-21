@@ -4,6 +4,7 @@ import "./App.css";
 const CharacterModel = lazy(() => import("./components/Character"));
 const MainContainer = lazy(() => import("./components/MainContainer"));
 import { LoadingProvider } from "./context/LoadingProvider";
+import EmailModal from "./components/EmailModal";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
             </Suspense>
           </MainContainer>
         </Suspense>
+        <EmailModal />
       </LoadingProvider>
     </>
   );

@@ -23,15 +23,27 @@ const Scene = () => {
   const [character, setChar] = useState<THREE.Object3D | null>(null);
   useEffect(() => {
     let isMounted = true;
-    if (canvasDiv.current) {
+    let animationFrameId: number;
+    let debounce: number | undefined;
+    let renderer: THREE.WebGLRenderer | undefined;
+    let landingDiv: HTMLElement | null = null;
+    let onResize: (() => void) | undefined;
+    let onMouseMove: ((event: MouseEvent) => void) | undefined;
+    let onTouchStart: ((event: TouchEvent) => void) | undefined;
+    let onTouchEnd: (() => void) | undefined;
+
+    const initTimeout = setTimeout(() => {
+      if (!isMounted || !canvasDiv.current) return;
+
       let rect = canvasDiv.current.getBoundingClientRect();
       let container = { width: rect.width, height: rect.height };
       const aspect = container.width / container.height;
       const scene = sceneRef.current;
 
-      const renderer = new THREE.WebGLRenderer({
+      renderer = new THREE.WebGLRenderer({
         alpha: true,
         antialias: true,
+        stencil: false,
       });
       renderer.setSize(container.width, container.height);
       renderer.setPixelRatio(window.devicePixelRatio);
@@ -51,6 +63,7 @@ const Scene = () => {
       (window as any)._renderer = renderer;
 
       let headBone: THREE.Object3D | null = null;
+      let jawBone: THREE.Object3D | null = null;
       let screenLight: any | null = null;
       let mixer: THREE.AnimationMixer;
       let isIntroRunning = () => false;
@@ -62,8 +75,8 @@ const Scene = () => {
       const { loadCharacter } = setCharacter(renderer, scene, camera);
 
       let loadedChar: THREE.Object3D | null = null;
-      const onResize = () => {
-        if (loadedChar) {
+      onResize = () => {
+        if (loadedChar && renderer) {
           handleResize(renderer, camera, canvasDiv, loadedChar);
         }
       };
@@ -81,6 +94,14 @@ const Scene = () => {
           setChar(character);
           scene.add(character);
           headBone = character.getObjectByName("spine006") || character.getObjectByName("Head") || null;
+          jawBone = character.getObjectByName("jaw") || character.getObjectByName("Wolf3D_Jaw") || character.getObjectByName("Mouth") || character.getObjectByName("lower_jaw") || null;
+          if (!jawBone) {
+            character.traverse((child: any) => {
+              if (child.name && child.name.toLowerCase().includes("jaw")) {
+                jawBone = child;
+              }
+            });
+          }
           screenLight = character.getObjectByName("screenlight") || null;
           progress.loaded().then(() => {
             if (!isMounted) return;
@@ -90,18 +111,18 @@ const Scene = () => {
               animations.startIntro();
             }, 2500);
           });
-          window.addEventListener("resize", onResize);
+          onResize && window.addEventListener("resize", onResize);
         }
       });
 
       let mouse = { x: 0, y: 0 },
         interpolation = { x: 0.1, y: 0.2 };
 
-      const onMouseMove = (event: MouseEvent) => {
+      onMouseMove = (event: MouseEvent) => {
         handleMouseMove(event, (x, y) => (mouse = { x, y }));
       };
-      let debounce: number | undefined;
-      const onTouchStart = (event: TouchEvent) => {
+      
+      onTouchStart = (event: TouchEvent) => {
         const element = event.target as HTMLElement;
         debounce = setTimeout(() => {
           element?.addEventListener("touchmove", (e: TouchEvent) =>
@@ -110,23 +131,23 @@ const Scene = () => {
         }, 200);
       };
 
-      const onTouchEnd = () => {
+      onTouchEnd = () => {
         handleTouchEnd((x, y, interpolationX, interpolationY) => {
           mouse = { x, y };
           interpolation = { x: interpolationX, y: interpolationY };
         });
       };
 
-      document.addEventListener("mousemove", (event) => {
-        onMouseMove(event);
-      });
-      const landingDiv = document.getElementById("landingDiv");
+      document.addEventListener("mousemove", onMouseMove);
+      landingDiv = document.getElementById("landingDiv");
       if (landingDiv) {
         landingDiv.addEventListener("touchstart", onTouchStart);
         landingDiv.addEventListener("touchend", onTouchEnd);
       }
+      
       const animate = () => {
-        requestAnimationFrame(animate);
+        if (!isMounted) return;
+        animationFrameId = requestAnimationFrame(animate);
         if (headBone) {
           if (!isIntroRunning()) {
             handleHeadRotation(
@@ -144,25 +165,37 @@ const Scene = () => {
         if (mixer) {
           mixer.update(delta);
         }
-        renderer.render(scene, camera);
+        if (jawBone) {
+          jawBone.rotation.x = 0.35; // Keep mouth open by rotating the jaw bone downward
+        }
+        if (renderer) renderer.render(scene, camera);
       };
       animate();
-      return () => {
-        isMounted = false;
-        clearTimeout(debounce);
-        scene.clear();
+    }, 400);
+
+    return () => {
+      isMounted = false;
+      clearTimeout(initTimeout);
+      cancelAnimationFrame(animationFrameId);
+      clearTimeout(debounce);
+      sceneRef.current.clear();
+      if (renderer) {
         renderer.dispose();
-        window.removeEventListener("resize", onResize);
-        if (canvasDiv.current) {
+        if (canvasDiv.current && renderer.domElement.parentNode === canvasDiv.current) {
           canvasDiv.current.removeChild(renderer.domElement);
         }
-        if (landingDiv) {
-          document.removeEventListener("mousemove", onMouseMove);
-          landingDiv.removeEventListener("touchstart", onTouchStart);
-          landingDiv.removeEventListener("touchend", onTouchEnd);
-        }
-      };
-    }
+      }
+      if (onResize) {
+        window.removeEventListener("resize", onResize);
+      }
+      if (onMouseMove) {
+        document.removeEventListener("mousemove", onMouseMove);
+      }
+      if (landingDiv) {
+        if (onTouchStart) landingDiv.removeEventListener("touchstart", onTouchStart);
+        if (onTouchEnd) landingDiv.removeEventListener("touchend", onTouchEnd);
+      }
+    };
   }, []);
 
   return (

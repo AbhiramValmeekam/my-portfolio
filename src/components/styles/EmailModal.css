@@ -1,0 +1,183 @@
+.email-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(4, 5, 8, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999999999;
+  opacity: 0;
+}
+
+.email-modal-container {
+  background-color: #0b0d16;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  width: 440px;
+  max-width: 90%;
+  padding: 35px 30px;
+  box-sizing: border-box;
+  position: relative;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  opacity: 0;
+}
+
+.email-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: #a1a1aa;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.email-modal-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  transform: rotate(90deg);
+}
+
+.email-modal-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.email-modal-icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(168, 124, 255, 0.15));
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+}
+
+.email-modal-icon {
+  color: #38bdf8;
+}
+
+.email-modal-header h3 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 5px;
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.email-address-text {
+  font-size: 13px;
+  color: #71717a;
+  margin: 0;
+  font-family: monospace;
+}
+
+.email-modal-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.email-option-btn {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  color: #e4e4e7;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  text-align: left;
+}
+
+.option-icon {
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.option-text-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.option-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 2px;
+  font-family: 'Outfit', sans-serif;
+}
+
+.option-desc {
+  font-size: 11px;
+  color: #71717a;
+}
+
+/* Hover effects */
+.email-option-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.email-option-btn:hover .option-icon {
+  transform: scale(1.1);
+}
+
+/* Gmail specific styling */
+.email-option-btn.gmail:hover {
+  background: rgba(234, 67, 53, 0.06);
+  border-color: rgba(234, 67, 53, 0.25);
+}
+.email-option-btn.gmail:hover .option-icon {
+  color: #ea4335;
+}
+
+/* Outlook specific styling */
+.email-option-btn.outlook:hover {
+  background: rgba(0, 120, 215, 0.06);
+  border-color: rgba(0, 120, 215, 0.25);
+}
+.email-option-btn.outlook:hover .option-icon {
+  color: #0078d7;
+}
+
+/* Default app specific styling */
+.email-option-btn.default-app:hover {
+  background: rgba(168, 85, 247, 0.06);
+  border-color: rgba(168, 85, 247, 0.25);
+}
+.email-option-btn.default-app:hover .option-icon {
+  color: #a855f7;
+}
+
+/* Copy specific styling */
+.email-option-btn.copy-btn:hover {
+  background: rgba(56, 189, 248, 0.06);
+  border-color: rgba(56, 189, 248, 0.25);
+}
+.email-option-btn.copy-btn:hover .option-icon {
+  color: #38bdf8;
+}
+
+.text-green-500 {
+  color: #10b981 !important;
+}

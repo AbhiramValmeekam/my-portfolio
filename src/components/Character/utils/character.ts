@@ -42,6 +42,42 @@ const setCharacter = (
                   child.castShadow = true;
                   child.receiveShadow = true;
                   mesh.frustumCulled = true;
+                  if (mesh.material) {
+                    const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+                    mats.forEach((mat: any) => {
+                      const name = (mat.name || "").toLowerCase();
+                      const isExcluded = 
+                        name.includes("hair") || 
+                        name.includes("eye") || 
+                        name.includes("brow") || 
+                        name.includes("lash") || 
+                        name.includes("teeth") || 
+                        name.includes("mouth") || 
+                        name.includes("tongue") ||
+                        name.includes("shirt") || 
+                        name.includes("pant") || 
+                        name.includes("shoe") || 
+                        name.includes("clothes") || 
+                        name.includes("outfit") || 
+                        name.includes("jacket") ||
+                        name.includes("suit") ||
+                        name.includes("glove");
+                      if (!isExcluded) {
+                        mat.color = new THREE.Color("#dfb99c");
+                        mat.vertexColors = false;
+                        mat.needsUpdate = true;
+                      }
+                    });
+                  }
+                  if (mesh.morphTargetDictionary && mesh.morphTargetInfluences) {
+                    Object.keys(mesh.morphTargetDictionary).forEach((key) => {
+                      const k = key.toLowerCase();
+                      if (k.includes("mouthopen") || k.includes("jawopen") || k.includes("openmouth") || k.includes("viseme_aa") || k.includes("viseme_o")) {
+                        const idx = mesh.morphTargetDictionary![key];
+                        mesh.morphTargetInfluences![idx] = 0.75;
+                      }
+                    });
+                  }
                 }
               });
               resolve(gltf);
@@ -247,6 +283,28 @@ const setCharacter = (
                           mat.roughness = Math.max(mat.roughness, 0.7); // Smooth matte shading
                           mat.metalness = Math.min(mat.metalness, 0.0); // Non-metallic skin/clothes
                         }
+                        const name = (mat.name || "").toLowerCase();
+                        const isExcluded = 
+                          name.includes("hair") || 
+                          name.includes("eye") || 
+                          name.includes("brow") || 
+                          name.includes("lash") || 
+                          name.includes("teeth") || 
+                          name.includes("mouth") || 
+                          name.includes("tongue") ||
+                          name.includes("shirt") || 
+                          name.includes("pant") || 
+                          name.includes("shoe") || 
+                          name.includes("clothes") || 
+                          name.includes("outfit") || 
+                          name.includes("jacket") ||
+                          name.includes("suit") ||
+                          name.includes("glove");
+                        if (!isExcluded) {
+                          mat.color = new THREE.Color("#dfb99c");
+                          mat.vertexColors = false;
+                          mat.needsUpdate = true;
+                        }
                       });
                     }
 
@@ -258,6 +316,20 @@ const setCharacter = (
                     skinnedMesh.castShadow = true;
                     skinnedMesh.receiveShadow = true;
                     skinnedMesh.frustumCulled = true;
+
+                    // Copy morph targets and set influences on skinnedMesh
+                    if (mesh.morphTargetDictionary && mesh.morphTargetInfluences) {
+                      skinnedMesh.morphTargetDictionary = mesh.morphTargetDictionary;
+                      skinnedMesh.morphTargetInfluences = [...mesh.morphTargetInfluences];
+                      
+                      Object.keys(skinnedMesh.morphTargetDictionary).forEach((key) => {
+                        const k = key.toLowerCase();
+                        if (k.includes("mouthopen") || k.includes("jawopen") || k.includes("openmouth") || k.includes("viseme_aa") || k.includes("viseme_o")) {
+                          const idx = skinnedMesh.morphTargetDictionary![key];
+                          skinnedMesh.morphTargetInfluences![idx] = 0.85; // Open mouth!
+                        }
+                      });
+                    }
 
                     skeletonParent.add(skinnedMesh);
                     skinnedMesh.bind(skeleton!);
