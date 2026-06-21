@@ -1,52 +1,36 @@
-# Valmeekam Abhiram - Personal Portfolio 🚀
+# 3D Avatar Developer Portfolio Website 🚀
 
-Welcome to my personal portfolio repository. This site showcases my work as a Full Stack Developer, featuring interactive 3D web experiences, computer vision tools, and AI-powered platforms.
+This repository contains the source code for an immersive, interactive 3D developer portfolio website template. It features a responsive 3D avatar that interacts with visitors, scroll-driven visual transitions, a mock terminal loading system, and modular layout components.
+
+---
+
+## 🛠️ Main Features
+
+### 1. Interactive 3D Avatar (Three.js & WebGL)
+- A rigged 3D developer avatar rendered inside a responsive WebGL canvas.
+- Real-time mouse-tracking system allowing the avatar's eyes and neck to follow the cursor.
+- Configurable environment maps, lighting vectors, and camera angles defined in a central schema.
+
+### 2. Smooth Scroll Orchestration (GSAP & ScrollTrigger)
+- High-performance, scroll-linked animations powered by GSAP.
+- Multi-section horizontal translations, card scaling, and dynamic typography skewing.
+
+### 3. Retro Ping Pong Game Preloader
+- A unique loader screen featuring a working mini-game container, custom fast-marquee text scrolling, and cubic-bezier expandoutro masking transitions.
+
+### 4. Fully Configurable Schema
+- Centralized configuration system ([portfolioConfig.ts](file:///c:/Users/ABHIRAM/my-portfolio/src/data/portfolioConfig.ts)) that lets developers customize all personal info, tech stacks, milestones, and theme colors instantly without editing individual UI components.
 
 ---
 
 ## ⚙️ Tech Stack
 
-- **Frontend**: React.js, Next.js, Three.js, GSAP, Tailwind CSS, HTML5, CSS3, JavaScript (ES6+), TypeScript
-- **Backend**: Node.js, Express.js, REST APIs
-- **Databases**: MongoDB, MySQL
-- **AI & Computer Vision**: Google Gemini API, OpenCV, Rhubarb Lip Sync
-
----
-
-## 📂 Featured Projects
-
-### 1. [AI Personal Tutor](https://adamversion-0-0.pages.dev)
-- Developed an AI tutor featuring a real-time 3D avatar enabling conversational interaction and emotional responses.
-- Integrated Google Gemini API for speech-to-text and text-to-speech with 95% accuracy and 1.5s latency.
-- Implemented realistic avatar speech using Rhubarb Lip Sync and Three.js at 60 FPS.
-
-### 2. [MANAFOLIO](https://github.com/AbhiramValmeekam/MANAFOLIO)
-- An AI-powered portfolio builder enabling developers to create customizable portfolios.
-- Built responsive UI with React and Tailwind CSS and implemented an interactive memory game.
-
-### 3. Smart Calculator
-- Developed a camera-based smart calculator which recognizes handwritten equations drawn in air using OpenCV hand tracking.
-- Sent equation images to Google Gemini API for mathematical interpretation.
-
----
-
-## 🏫 Education & Milestones
-
-- **Anurag University** (2024 – 2028) - B.Tech in Computer Science Engineering (CGPA: 8.72)
-- **Narayana Junior College** (2022 – 2024) - Intermediate (85.2%)
-- **NS Grammar High School** (2021 – 2022) - Secondary Education (CGPA: 9.7)
-
----
-
-## 🏆 Key Achievements
-
-- Placed in the **Top 5** in two 24-hour Hackathons conducted by Anurag University.
-- **AI Personal Tutor** project was selected for the **Tejas2K26 Project Expo** at Anurag University.
-- **Smart Calculator** project was selected for the **Tejas2K25 Project Expo** at Anurag University.
-- Final round participant in **TechHack**, a National-level Hackathon organized by BITS Hyderabad.
+- **Frontend**: React.js, Vite, Three.js, GSAP, `@react-three/fiber`, `@react-three/drei`, Tailwind CSS, CSS Grid, HTML5
+- **Backend & Database**: Node.js, Express.js, MongoDB, MySQL
+- **Assets**: Blender, Rhubarb Lip Sync, glTF / GLB 3D models
 
 ---
 
 ## 📄 License
 
-This project is licensed under the Personal Portfolio License (PPL) v1.0. See the [LICENSE](file:///c:/Users/ABHIRAM/my-portfolio/LICENSE) file for full details.
+This project is licensed under the Personal Portfolio License (PPL) v1.0. See the [LICENSE](file:///c:/Users/ABHIRAM/my-portfolio/LICENSE) file for details.
