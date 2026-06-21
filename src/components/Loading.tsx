@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "./styles/Loading.css";
 import { useLoading } from "../context/LoadingProvider";
-import Marquee from "react-fast-marquee";
 
 const Loading = ({ percent }: { percent: number }) => {
   const { setIsLoading } = useLoading();
@@ -32,60 +31,76 @@ const Loading = ({ percent }: { percent: number }) => {
     });
   }, [isLoaded, setIsLoading]);
 
-  function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
-    const { currentTarget: target } = e;
-    const rect = target.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    target.style.setProperty("--mouse-x", `${x}px`);
-    target.style.setProperty("--mouse-y", `${y}px`);
-  }
+  // Determine which cute cartoon face to show based on percentage
+  const getCartoonFace = () => {
+    if (percent < 25) return "😴";
+    if (percent < 50) return "🤔";
+    if (percent < 75) return "🙂";
+    if (percent < 99) return "🤩";
+    return "🥳";
+  };
+
+  const getStatusMessage = () => {
+    if (percent < 25) return "Zzz... waking up the servers...";
+    if (percent < 50) return "Gathering cute ideas...";
+    if (percent < 75) return "Baking the 3D models...";
+    if (percent < 99) return "Adding magic sparkles...";
+    return "Tada! Everything is ready!";
+  };
+
+  const loadingText = "LOADING...";
 
   return (
-    <>
-      <div className="loading-header">
-        <a href="/#" className="loader-title" data-cursor="disable">
-          Logo
-        </a>
-        <div className={`loaderGame ${clicked && "loader-out"}`}>
-          <div className="loaderGame-container">
-            <div className="loaderGame-in">
-              {[...Array(27)].map((_, index) => (
-                <div className="loaderGame-line" key={index}></div>
-              ))}
-            </div>
-            <div className="loaderGame-ball"></div>
+    <div className={`cartoon-preloader-container ${clicked ? "cartoon-preloader-exit" : ""}`}>
+      {/* Playful cartoon background grid */}
+      <div className="cartoon-bg-grid"></div>
+
+      <div className="cartoon-card">
+        {/* Animated Cartoon Face / Blob */}
+        <div className="cartoon-face-wrapper">
+          <div className="cartoon-face-shadow"></div>
+          <div className="cartoon-face">
+            <span className="cartoon-emoji">{getCartoonFace()}</span>
           </div>
         </div>
-      </div>
-      <div className="loading-screen">
-        <div className="loading-marquee">
-          <Marquee>
-            <span> A Creative Developer</span> <span>A Creative Designer</span>
-            <span> A Creative Developer</span> <span>A Creative Designer</span>
-          </Marquee>
+
+        {/* Playful jumping loading letters */}
+        <div className="cartoon-loading-text">
+          {loadingText.split("").map((char, index) => (
+            <span
+              key={index}
+              className="cartoon-letter"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              {char}
+            </span>
+          ))}
         </div>
-        <div
-          className={`loading-wrap ${clicked && "loading-clicked"}`}
-          onMouseMove={handleMouseMove}
-        >
-          <div className="loading-hover"></div>
-          <div className={`loading-button ${loaded && "loading-complete"}`}>
-            <div className="loading-container">
-              <div className="loading-content">
-                <div className="loading-content-in">
-                  Loading <span>{percent}%</span>
-                </div>
-              </div>
-              <div className="loading-box"></div>
-            </div>
-            <div className="loading-content2">
-              <span>Welcome</span>
-            </div>
+
+        {/* Dynamic status helper */}
+        <p className="cartoon-status-msg">{getStatusMessage()}</p>
+
+        {/* Cute Comic-style Progress Bar */}
+        <div className="cartoon-progress-border">
+          <div
+            className="cartoon-progress-fill"
+            style={{ width: `${percent}%` }}
+          >
+            {/* Tiny cartoon star indicator at the tip of progress */}
+            {percent > 5 && <span className="cartoon-progress-star">⭐</span>}
           </div>
         </div>
+
+        {/* Percentage Badge */}
+        <div className="cartoon-badge">
+          <span>{percent}%</span>
+        </div>
       </div>
-    </>
+
+      {/* Comic split transition panels */}
+      <div className="comic-panel-left"></div>
+      <div className="comic-panel-right"></div>
+    </div>
   );
 };
 
