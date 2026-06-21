@@ -30,7 +30,3 @@ This repository contains the source code for an immersive, interactive 3D develo
 - **Assets**: Blender, Rhubarb Lip Sync, glTF / GLB 3D models
 
 ---
-
-## 📄 License
-
-This project is licensed under the Personal Portfolio License (PPL) v1.0. See the [LICENSE](file:///c:/Users/ABHIRAM/my-portfolio/LICENSE) file for details.
