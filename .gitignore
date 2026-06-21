@@ -1,0 +1,56 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.npmrc
+
+backup/
+.env
+
+# Temporary extraction/scratch files
+tmp_extract/
+scratch/
+matches.txt
+matches_735.txt
+matches_7ee.txt
+recover.ps1
+recover_orig.ps1
+
+# Python helper scripts and scratch JS
+*.py
+test.js
+
+# Exclude large, unused 3D models in root and public assets
+*.glb
+!public/models/portfolio.glb
+!public/models/character.glb
+public/models/Meshy_*
+public/models/techie_*
+public/models/character_backup.glb
+public/models/character_temp.glb
+public/models/portfolio_backup.glb
+public/models/custom_avatar.glb
+public/models/*_Image_*
+public/models/Base_color_texture*
+public/models/baked_*
+public/models/test_*

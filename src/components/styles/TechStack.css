@@ -1,0 +1,52 @@
+.techstack-section {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  background-color: var(--backgroundColor);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.techstack-title-physics {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  text-align: center;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #fff;
+  z-index: 10;
+  pointer-events: none;
+  margin-top: 120px;
+  position: absolute;
+}
+
+.techstack-title-physics span {
+  color: var(--accentColor);
+  text-shadow: 0 0 20px var(--accentGlow);
+}
+
+.tech-canvas-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.tech-canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 900px) {
+  .techstack-title-physics {
+    font-size: 2.5rem;
+    margin-top: 80px;
+  }
+}
