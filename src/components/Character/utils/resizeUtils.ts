@@ -26,22 +26,26 @@ export default function handleResize(
   }
 
   // Debounce: let ScrollTrigger recalculate after resize settles.
-  // The timelines already have `invalidateOnRefresh: true`, so a refresh
-  // is all that's needed — no killing/recreating of timelines.
   if (resizeTimer) clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => {
-    ScrollTrigger.refresh();
+    // Force a complete rebuild of ScrollTrigger values
+    ScrollTrigger.refresh(true);
+
     if (setIsLoading && setLoading) {
       let currentProgress = 0;
       const interval = setInterval(() => {
-        currentProgress += 10;
+        currentProgress += 5;
         if (currentProgress >= 100) {
           clearInterval(interval);
           setLoading(100);
+          // Keep it paused for a short second (1000ms) to let WebGL paint/render settle
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 1000);
         } else {
           setLoading(currentProgress);
         }
-      }, 30);
+      }, 15);
     }
-  }, 200);
+  }, 500);
 }
