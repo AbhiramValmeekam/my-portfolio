@@ -32,8 +32,12 @@ const Scene = () => {
     let onTouchStart: ((event: TouchEvent) => void) | undefined;
     let onTouchEnd: (() => void) | undefined;
 
-    const initTimeout = setTimeout(() => {
-      if (!isMounted || !canvasDiv.current) return;
+    const init = () => {
+      if (!isMounted) return;
+      if (!canvasDiv.current) {
+        setTimeout(init, 100);
+        return;
+      }
 
       let rect = canvasDiv.current.getBoundingClientRect();
       let container = { width: rect.width, height: rect.height };
@@ -189,11 +193,11 @@ const Scene = () => {
         if (renderer) renderer.render(scene, camera);
       };
       animate();
-    }, 400);
+    };
+    init();
 
     return () => {
       isMounted = false;
-      clearTimeout(initTimeout);
       cancelAnimationFrame(animationFrameId);
       clearTimeout(debounce);
       sceneRef.current.clear();
