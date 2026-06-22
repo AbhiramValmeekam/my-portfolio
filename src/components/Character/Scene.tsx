@@ -93,8 +93,8 @@ const Scene = () => {
             camera,
             canvasDiv,
             loadedChar || new THREE.Object3D(),
-            setIsLoading,
-            setLoading
+            loadedChar ? setIsLoading : undefined,
+            loadedChar ? setLoading : undefined
           );
         }
       };
