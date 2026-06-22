@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Filter for Hand-Drawn Wobbly Lines (Sketch Effect) -->
+    <filter id="sketch-filter" x="-10%" y="-10%" width="120%" height="120%">
+      <!-- Rough wobbly edges -->
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" xChannelSelector="R" yChannelSelector="G" result="wobbly" />
+    </filter>
+
+    <!-- Pencil Hatch Shading Pattern (Diagonal Pencil Strokes) -->
+    <pattern id="pencil-shading-light" width="12" height="12" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="12" stroke="#5A5A5A" stroke-width="1.2" opacity="0.4" />
+    </pattern>
+
+    <pattern id="pencil-shading-dark" width="6" height="6" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#3A3A3A" stroke-width="1.5" opacity="0.75" />
+      <line x1="0" y1="0" x2="6" y2="0" stroke="#3A3A3A" stroke-width="1" opacity="0.3" /> <!-- cross hatch -->
+    </pattern>
+  </defs>
+
+  <!-- Soothing Notion Cream Background -->
+  <circle cx="256" cy="256" r="240" fill="#FAF9F6" stroke="#3A3A3A" stroke-width="3" filter="url(#sketch-filter)" />
+
+  <!-- Monogram with Pencil-Shaded Style -->
+  <g filter="url(#sketch-filter)">
+    <!-- Main Outlines of AV Monogram (Solid pencil outline) -->
+    
+    <!-- Underlay base (gives pencil core fill color) -->
+    <!-- V Shape -->
+    <path d="M 150 170 L 256 380 L 362 170 L 312 170 L 256 290 L 200 170 Z" fill="#F0EFEA" stroke="#3A3A3A" stroke-width="3.5" stroke-linejoin="round" />
+    <!-- V Shade (Diagonal Shading Overlay) -->
+    <path d="M 150 170 L 256 380 L 362 170 L 312 170 L 256 290 L 200 170 Z" fill="url(#pencil-shading-light)" />
+    
+    <!-- A Shape -->
+    <path d="M 256 130 L 120 380 L 170 380 L 256 210 L 342 380 L 392 380 Z" fill="#EAE8E2" stroke="#2A2A2A" stroke-width="4" stroke-linejoin="round" />
+    <!-- A Shade (Denser cross-hatch for interlocking depth) -->
+    <path d="M 256 130 L 120 380 L 170 380 L 256 210 L 342 380 L 392 380 Z" fill="url(#pencil-shading-dark)" />
+    
+    <!-- Crossbar of the A -->
+    <path d="M 190 310 L 322 310 L 310 335 L 202 335 Z" fill="#E2E0D8" stroke="#2A2A2A" stroke-width="3.5" stroke-linejoin="round" />
+    <path d="M 190 310 L 322 310 L 310 335 L 202 335 Z" fill="url(#pencil-shading-dark)" />
+
+    <!-- Extra hand-drawn pencil outline overlay to give sketch lines character -->
+    <path d="M 150 170 L 256 380 M 362 170 L 256 380" fill="none" stroke="#1A1A1A" stroke-width="1.5" opacity="0.8" />
+    <path d="M 256 130 L 120 380 M 256 130 L 392 380" fill="none" stroke="#1A1A1A" stroke-width="2.5" opacity="0.9" />
+  </g>
+</svg>
