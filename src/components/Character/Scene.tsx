@@ -78,7 +78,7 @@ const Scene = () => {
       let lastWidth = window.innerWidth;
       const initialIsDesktop = window.innerWidth > 1024;
       onResize = () => {
-        if (renderer) {
+        if (loadedChar && renderer) {
           const currentWidth = window.innerWidth;
           if (currentWidth === lastWidth) return;
           lastWidth = currentWidth;
@@ -92,9 +92,9 @@ const Scene = () => {
             renderer,
             camera,
             canvasDiv,
-            loadedChar || new THREE.Object3D(),
-            loadedChar ? setIsLoading : undefined,
-            loadedChar ? setLoading : undefined
+            loadedChar,
+            setIsLoading,
+            setLoading
           );
         }
       };
