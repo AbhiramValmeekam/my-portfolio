@@ -75,8 +75,14 @@ const Scene = () => {
       const { loadCharacter } = setCharacter(renderer, scene, camera);
 
       let loadedChar: THREE.Object3D | null = null;
+      const initialIsDesktop = window.innerWidth > 1024;
       onResize = () => {
         if (renderer) {
+          const currentIsDesktop = window.innerWidth > 1024;
+          if (currentIsDesktop !== initialIsDesktop) {
+            window.location.reload();
+            return;
+          }
           handleResize(
             renderer,
             camera,
