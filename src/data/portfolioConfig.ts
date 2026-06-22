@@ -47,7 +47,7 @@ export interface PortfolioConfig {
   socialLinks: {
     github: string;
     linkedin: string;
-    twitter?: string;
+    instagram?: string;
     email: string;
   };
   whatIDo: WhatIDoCategory[];
@@ -81,7 +81,7 @@ export const portfolioConfig: PortfolioConfig = {
   socialLinks: {
     github: "https://github.com/AbhiramValmeekam",
     linkedin: "https://www.linkedin.com/in/valmeekam-abhiram",
-    twitter: "https://twitter.com",
+    instagram: "https://www.instagram.com/_abhirammmmmm_",
     email: "mailto:abhiramsharma567@gmail.com",
   },
   whatIDo: [

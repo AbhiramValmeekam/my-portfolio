@@ -4,7 +4,7 @@ import { portfolioConfig } from "../data/portfolioConfig";
 
 const Contact = () => {
   const { email, firstName, lastName } = portfolioConfig.personalInfo;
-  const { github, linkedin, twitter } = portfolioConfig.socialLinks;
+  const { github, linkedin, instagram } = portfolioConfig.socialLinks;
   const currentYear = new Date().getFullYear();
 
   return (
@@ -44,15 +44,15 @@ const Contact = () => {
                 Linkedin <MdArrowOutward />
               </a>
             )}
-            {twitter && (
+            {instagram && (
               <a
-                href={twitter}
+                href={instagram}
                 target="_blank"
                 rel="noreferrer"
                 data-cursor="disable"
                 className="contact-social"
               >
-                Twitter <MdArrowOutward />
+                Instagram <MdArrowOutward />
               </a>
             )}
           </div>

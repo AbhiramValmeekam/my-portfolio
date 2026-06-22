@@ -1,7 +1,7 @@
 import {
   FaGithub,
+  FaInstagram,
   FaLinkedinIn,
-  FaXTwitter,
 } from "react-icons/fa6";
 import "./styles/SocialIcons.css";
 import { TbNotes } from "react-icons/tb";
@@ -75,10 +75,10 @@ const SocialIcons = () => {
             </a>
           </span>
         )}
-        {portfolioConfig.socialLinks.twitter && (
+        {portfolioConfig.socialLinks.instagram && (
           <span>
-            <a href={portfolioConfig.socialLinks.twitter} target="_blank" rel="noreferrer">
-              <FaXTwitter />
+            <a href={portfolioConfig.socialLinks.instagram} target="_blank" rel="noreferrer">
+              <FaInstagram />
             </a>
           </span>
         )}
