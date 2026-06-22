@@ -173,6 +173,7 @@ const TechStack = () => {
 
       <Canvas
         shadows
+        dpr={window.innerWidth <= 1024 ? [1, 1.5] : [1, 2]}
         gl={{ alpha: true, stencil: false, depth: true, antialias: false }}
         camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }}
         onCreated={(state) => (state.gl.toneMappingExposure = 1.5)}
