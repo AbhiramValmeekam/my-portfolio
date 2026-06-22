@@ -1,5 +1,7 @@
 import * as THREE from "three";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import gsap from "gsap";
+import { setCharTimeline, setAllTimeline } from "../../utils/GsapScroll";
 
 let resizeTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -7,7 +9,7 @@ export default function handleResize(
   renderer: THREE.WebGLRenderer,
   camera: THREE.PerspectiveCamera,
   canvasDiv: React.RefObject<HTMLDivElement>,
-  _character: THREE.Object3D,
+  character: THREE.Object3D,
   setIsLoading?: (state: boolean) => void,
   setLoading?: (percent: number) => void
 ) {
@@ -28,6 +30,34 @@ export default function handleResize(
   // Debounce: let ScrollTrigger recalculate after resize settles.
   if (resizeTimer) clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => {
+    // Kill existing ScrollTriggers to prevent duplicate triggers and conflicts
+    ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+
+    // Clear GSAP offsets while preserving raw CSS transforms (like translateX(-50%))
+    gsap.set(".character-model", { clearProps: "x,y,pointerEvents" });
+    gsap.set(
+      [
+        ".character-rim",
+        ".about-me",
+        ".landing-container",
+        ".about-section",
+        ".what-box-in",
+        ".whatIDO",
+        ".career-timeline",
+        ".career-info-box",
+      ],
+      { clearProps: "all" }
+    );
+
+    // Reset character rotation/position to initial setup
+    character.rotation.set(0, 0, 0);
+    const initialCamera = [0, 13.1, 24.7];
+    camera.position.set(initialCamera[0], initialCamera[1], initialCamera[2]);
+
+    // Reinitialize the correct timelines for the new screen size/breakpoint
+    setCharTimeline(character, camera);
+    setAllTimeline();
+
     // Force a complete rebuild of ScrollTrigger values
     ScrollTrigger.refresh(true);
 
