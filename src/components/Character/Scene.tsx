@@ -76,10 +76,11 @@ const Scene = () => {
 
       let loadedChar: THREE.Object3D | null = null;
       onResize = () => {
-        if (loadedChar && renderer) {
-          handleResize(renderer, camera, canvasDiv, loadedChar);
+        if (renderer) {
+          handleResize(renderer, camera, canvasDiv, loadedChar || new THREE.Object3D());
         }
       };
+      window.addEventListener("resize", onResize);
 
       loadCharacter().then((gltf) => {
         if (!isMounted) return;
@@ -111,7 +112,6 @@ const Scene = () => {
               animations.startIntro();
             }, 2500);
           });
-          onResize && window.addEventListener("resize", onResize);
         }
       });
 
