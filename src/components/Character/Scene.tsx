@@ -181,6 +181,7 @@ const Scene = () => {
       sceneRef.current.clear();
       if (renderer) {
         renderer.dispose();
+        renderer.forceContextLoss();
         if (canvasDiv.current && renderer.domElement.parentNode === canvasDiv.current) {
           canvasDiv.current.removeChild(renderer.domElement);
         }
