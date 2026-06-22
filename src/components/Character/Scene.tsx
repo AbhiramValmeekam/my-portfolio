@@ -18,7 +18,7 @@ const Scene = () => {
   const canvasDiv = useRef<HTMLDivElement | null>(null);
   const hoverDivRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef(new THREE.Scene());
-  const { setLoading } = useLoading();
+  const { setLoading, setIsLoading } = useLoading();
 
   const [, setChar] = useState<THREE.Object3D | null>(null);
   useEffect(() => {
@@ -77,7 +77,14 @@ const Scene = () => {
       let loadedChar: THREE.Object3D | null = null;
       onResize = () => {
         if (renderer) {
-          handleResize(renderer, camera, canvasDiv, loadedChar || new THREE.Object3D());
+          handleResize(
+            renderer,
+            camera,
+            canvasDiv,
+            loadedChar || new THREE.Object3D(),
+            setIsLoading,
+            setLoading
+          );
         }
       };
       window.addEventListener("resize", onResize);

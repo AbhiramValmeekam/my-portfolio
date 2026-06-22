@@ -7,7 +7,9 @@ export default function handleResize(
   renderer: THREE.WebGLRenderer,
   camera: THREE.PerspectiveCamera,
   canvasDiv: React.RefObject<HTMLDivElement>,
-  _character: THREE.Object3D
+  _character: THREE.Object3D,
+  setIsLoading?: (state: boolean) => void,
+  setLoading?: (percent: number) => void
 ) {
   // Immediate: update renderer size so canvas doesn't look stretched
   if (!canvasDiv.current) return;
@@ -18,11 +20,28 @@ export default function handleResize(
   camera.aspect = width / height;
   camera.updateProjectionMatrix();
 
+  if (setIsLoading && setLoading) {
+    setIsLoading(true);
+    setLoading(0);
+  }
+
   // Debounce: let ScrollTrigger recalculate after resize settles.
   // The timelines already have `invalidateOnRefresh: true`, so a refresh
   // is all that's needed — no killing/recreating of timelines.
   if (resizeTimer) clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => {
     ScrollTrigger.refresh();
+    if (setIsLoading && setLoading) {
+      let currentProgress = 0;
+      const interval = setInterval(() => {
+        currentProgress += 10;
+        if (currentProgress >= 100) {
+          clearInterval(interval);
+          setLoading(100);
+        } else {
+          setLoading(currentProgress);
+        }
+      }, 30);
+    }
   }, 200);
 }
