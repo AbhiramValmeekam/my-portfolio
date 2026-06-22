@@ -4,7 +4,22 @@ import gsap from "gsap";
 import { setCharTimeline, setAllTimeline } from "../../utils/GsapScroll";
 import { portfolioConfig } from "../../../data/portfolioConfig";
 
+let resizeTimer: ReturnType<typeof setTimeout> | null = null;
+
 export default function handleResize(
+  renderer: THREE.WebGLRenderer,
+  camera: THREE.PerspectiveCamera,
+  canvasDiv: React.RefObject<HTMLDivElement>,
+  character: THREE.Object3D
+) {
+  // Debounce: only run after resize events settle (e.g. DevTools open/close)
+  if (resizeTimer) clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    performResize(renderer, camera, canvasDiv, character);
+  }, 150);
+}
+
+function performResize(
   renderer: THREE.WebGLRenderer,
   camera: THREE.PerspectiveCamera,
   canvasDiv: React.RefObject<HTMLDivElement>,
@@ -18,11 +33,13 @@ export default function handleResize(
   camera.aspect = width / height;
   camera.updateProjectionMatrix();
 
-  // Reset GSAP-applied inline transforms to prevent stale positions after resize
-  gsap.set(".character-model", { clearProps: "x,y,pointerEvents" });
-  gsap.set(".character-rim", { clearProps: "opacity,scale,scaleX,y" });
-  gsap.set(".about-me", { clearProps: "y" });
-  gsap.set(".landing-container", { clearProps: "opacity,y" });
+  // Reset GSAP-applied values WITHOUT clearing CSS transforms.
+  // GSAP's x/y are additive offsets; setting them to 0 preserves the
+  // original CSS `transform: translateX(-50%)` that centers .character-model.
+  gsap.set(".character-model", { x: 0, y: 0, pointerEvents: "inherit" });
+  gsap.set(".character-rim", { opacity: 0, scale: 1.4, y: 0 });
+  gsap.set(".about-me", { y: 0 });
+  gsap.set(".landing-container", { opacity: 1, y: 0 });
 
   // Reset character rotation and camera to initial state
   character.rotation.set(0, 0, 0);
