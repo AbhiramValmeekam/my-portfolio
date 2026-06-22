@@ -148,6 +148,15 @@ export const portfolioConfig: PortfolioConfig = {
   ],
   projects: [
     {
+      title: "HeroCV",
+      category: "Full Stack & AI",
+      tools: ["React", "TypeScript", "Tailwind CSS v4", "Node.js", "Express.js", "MongoDB", "Google Gemini API", "jsPDF", "html2canvas"],
+      image: "/images/resume-builder.png",
+      description: "An AI-powered resume builder featuring JWT authentication, interactive live preview, and one-click PDF export. Leverages Google Gemini AI for smart summaries, bullet point enhancement, skill suggestions, ATS score optimization, and job description matching.",
+      link: "https://hero-cv-ruby.vercel.app/",
+      github: "https://github.com/AbhiramValmeekam/HeroCV",
+    },
+    {
       title: "AI Personal Tutor",
       category: "AI & 3D Dev",
       tools: ["React", "Node.js", "JavaScript", "Three.js", "Google Gemini API"],

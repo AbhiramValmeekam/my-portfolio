@@ -45,7 +45,7 @@ const Navbar = () => {
     };
   }, []);
 
-  const { firstName, email } = portfolioConfig.personalInfo;
+  const { email } = portfolioConfig.personalInfo;
 
   return (
     <>

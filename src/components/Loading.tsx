@@ -1,19 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import "./styles/Loading.css";
 import { useLoading } from "../context/LoadingProvider";
 import Marquee from "react-fast-marquee";
 import gsap from "gsap";
-
-const stickerUrls = [
-  "https://david-denni-portfolio.cdn.prismic.io/david-denni-portfolio/Z64MjpbqstJ9-lW__BG.svg",
-  "https://david-denni-portfolio.cdn.prismic.io/david-denni-portfolio/Z64MvZbqstJ9-lXV_MarcoMartini.svg",
-  "https://david-denni-portfolio.cdn.prismic.io/david-denni-portfolio/Z64M4ZbqstJ9-lXl_Miro.svg",
-  "https://david-denni-portfolio.cdn.prismic.io/david-denni-portfolio/Z64NJJbqstJ9-lYE_WearOS.svg",
-  "https://david-denni-portfolio.cdn.prismic.io/david-denni-portfolio/Z64MzZbqstJ9-lXc_Microsoft.svg",
-  "https://david-denni-portfolio.cdn.prismic.io/david-denni-portfolio/Z64Mc5bqstJ9-lWz_Amazon.svg",
-  "https://david-denni-portfolio.cdn.prismic.io/david-denni-portfolio/Z7WrKJ7c43Q3f9X3_Peer.svg",
-  "https://david-denni-portfolio.cdn.prismic.io/david-denni-portfolio/Z64NApbqstJ9-lX1_SkiDubai.svg",
-];
 
 const getIcon = (name: string, brandColor: string) => {
   const color = brandColor === "#ffffff" ? "#000000" : brandColor;
