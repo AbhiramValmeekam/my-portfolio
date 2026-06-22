@@ -75,10 +75,15 @@ const Scene = () => {
       const { loadCharacter } = setCharacter(renderer, scene, camera);
 
       let loadedChar: THREE.Object3D | null = null;
+      let lastWidth = window.innerWidth;
       const initialIsDesktop = window.innerWidth > 1024;
       onResize = () => {
         if (renderer) {
-          const currentIsDesktop = window.innerWidth > 1024;
+          const currentWidth = window.innerWidth;
+          if (currentWidth === lastWidth) return;
+          lastWidth = currentWidth;
+
+          const currentIsDesktop = currentWidth > 1024;
           if (currentIsDesktop !== initialIsDesktop) {
             window.location.reload();
             return;
